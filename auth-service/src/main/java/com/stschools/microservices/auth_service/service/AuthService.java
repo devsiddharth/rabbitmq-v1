@@ -1,4 +1,13 @@
 package com.stschools.microservices.auth_service.service;
 
-public class AuthService {
+import com.stschools.microservices.common_contracts.dto.request.LoginRequest;
+import com.stschools.microservices.common_contracts.dto.request.RegisterRequest;
+import com.stschools.microservices.common_contracts.dto.response.UserResponse;
+
+public interface AuthService {
+
+    UserResponse register(RegisterRequest request);
+
+    String login(LoginRequest request);
+
 }

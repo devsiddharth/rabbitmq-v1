@@ -1,6 +1,7 @@
 package com.stschools.microservices.user_service.entity;
 
-import com.stschools.microservices.user_service.enums.Role;
+
+import com.stschools.microservices.common_contracts.enums.Role;
 import jakarta.persistence.*;
 import lombok.*;
 

@@ -1,7 +1,7 @@
 package com.stschools.microservices.user_service.service;
 
-import com.stschools.microservices.user_service.dto.CreateUserRequest;
-import com.stschools.microservices.user_service.dto.UserResponse;
+import com.stschools.microservices.common_contracts.dto.request.CreateUserRequest;
+import com.stschools.microservices.common_contracts.dto.response.UserResponse;
 import com.stschools.microservices.user_service.entity.User;
 
 public interface UserService {

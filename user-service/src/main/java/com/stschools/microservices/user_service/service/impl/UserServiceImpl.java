@@ -1,14 +1,16 @@
 package com.stschools.microservices.user_service.service.impl;
 
-import com.stschools.microservices.user_service.dto.CreateUserRequest;
-import com.stschools.microservices.user_service.dto.UserResponse;
+import com.stschools.microservices.common_contracts.dto.request.CreateUserRequest;
+import com.stschools.microservices.common_contracts.dto.response.UserResponse;
+import com.stschools.microservices.common_contracts.enums.Role;
 import com.stschools.microservices.user_service.entity.User;
-import com.stschools.microservices.user_service.enums.Role;
+
 import com.stschools.microservices.user_service.exception.EmailAlreadyExistsException;
 import com.stschools.microservices.user_service.exception.PasswordMismatchException;
 import com.stschools.microservices.user_service.repository.UserRepository;
 import com.stschools.microservices.user_service.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -16,13 +18,10 @@ import org.springframework.stereotype.Service;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public UserResponse createUser(CreateUserRequest request) {
-
-        if (!request.getPassword().equals(request.getConfirmPassword())) {
-            throw new PasswordMismatchException("Passwords do not match");
-        }
 
         if (userRepository.existsByEmail(request.getEmail())) {
             throw new EmailAlreadyExistsException("Email already exists");
@@ -33,7 +32,7 @@ public class UserServiceImpl implements UserService {
                 .lastName(request.getLastName())
                 .email(request.getEmail())
                 .phoneNumber(request.getPhoneNumber())
-                .password(request.getPassword()) // Temporary
+                .password(passwordEncoder.encode(request.getPassword()))
                 .role(Role.USER)
                 .build();
 

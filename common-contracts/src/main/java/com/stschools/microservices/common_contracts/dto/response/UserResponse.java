@@ -1,6 +1,7 @@
-package com.stschools.microservices.user_service.dto;
+package com.stschools.microservices.common_contracts.dto.response;
 
-import com.stschools.microservices.user_service.enums.Role;
+
+import com.stschools.microservices.common_contracts.enums.Role;
 import lombok.*;
 
 @Getter

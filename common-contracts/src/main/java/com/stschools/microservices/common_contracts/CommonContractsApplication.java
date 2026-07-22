@@ -1,0 +1,13 @@
+package com.stschools.microservices.common_contracts;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class CommonContractsApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(CommonContractsApplication.class, args);
+	}
+
+}

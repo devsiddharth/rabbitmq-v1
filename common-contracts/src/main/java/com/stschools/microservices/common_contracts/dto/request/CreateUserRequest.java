@@ -1,4 +1,5 @@
-package com.stschools.microservices.user_service.dto;
+package com.stschools.microservices.common_contracts.dto.request;
+
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -32,6 +33,4 @@ public class CreateUserRequest {
     @Size(min = 8, message = "Password must contain at least 8 characters")
     private String password;
 
-    @NotBlank(message = "Confirm password is required")
-    private String confirmPassword;
 }
