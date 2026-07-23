@@ -1,6 +1,7 @@
 package com.stschools.microservices.user_service.controller;
 
 import com.stschools.microservices.common_contracts.dto.request.CreateUserRequest;
+import com.stschools.microservices.common_contracts.dto.response.UserAuthResponse;
 import com.stschools.microservices.common_contracts.dto.response.UserResponse;
 import com.stschools.microservices.user_service.entity.User;
 import com.stschools.microservices.user_service.service.UserService;
@@ -38,6 +39,18 @@ public class UserController {
         User user = userService.getUserByEmail(email);
 
         UserResponse response = modelMapper.map(user, UserResponse.class);
+
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/auth/{email}")
+    public ResponseEntity<UserAuthResponse> getUserForAuthentication(
+            @PathVariable String email) {
+
+        User user = userService.getUserByEmail(email);
+
+        UserAuthResponse response =
+                modelMapper.map(user, UserAuthResponse.class);
 
         return ResponseEntity.ok(response);
     }

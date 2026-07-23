@@ -3,6 +3,7 @@ package com.stschools.microservices.auth_service.controller;
 import com.stschools.microservices.common_contracts.dto.request.LoginRequest;
 import com.stschools.microservices.common_contracts.dto.request.RegisterRequest;
 import com.stschools.microservices.auth_service.service.AuthService;
+import com.stschools.microservices.common_contracts.dto.response.LoginResponse;
 import com.stschools.microservices.common_contracts.dto.response.UserResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -29,7 +30,7 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(
+    public ResponseEntity<LoginResponse> login(
             @Valid @RequestBody LoginRequest request) {
 
         return ResponseEntity.ok(authService.login(request));

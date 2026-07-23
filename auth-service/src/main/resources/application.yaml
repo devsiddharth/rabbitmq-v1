@@ -14,3 +14,8 @@ eureka:
 
   instance:
     prefer-ip-address: true
+
+jwt:
+  secret: ThisIsMyVeryStrongSecretKeyForJwtGeneration12345
+  issuer: stschools
+  expiration: 86400000
