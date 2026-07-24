@@ -5,6 +5,7 @@ import com.stschools.microservices.common_contracts.dto.response.UserAuthRespons
 import com.stschools.microservices.common_contracts.dto.response.UserResponse;
 import com.stschools.microservices.user_service.entity.User;
 import com.stschools.microservices.user_service.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -33,14 +34,21 @@ public class UserController {
     }
 
     @GetMapping("/email/{email}")
-    public ResponseEntity<UserResponse> getUserByEmail(
-            @PathVariable String email) {
+    public ResponseEntity<User> getByEmail(
+            @PathVariable String email,
+            HttpServletRequest request) {
 
-        User user = userService.getUserByEmail(email);
+        System.out.println("Reached User Service");
+        System.out.println("Header Authorization = "
+                + request.getHeader("Authorization"));
 
-        UserResponse response = modelMapper.map(user, UserResponse.class);
+        System.out.println("X-Authenticated-User = "
+                + request.getHeader("X-Authenticated-User"));
 
-        return ResponseEntity.ok(response);
+        System.out.println("X-Authenticated-Role = "
+                + request.getHeader("X-Authenticated-Role"));
+
+        return ResponseEntity.ok(userService.getUserByEmail(email));
     }
 
     @GetMapping("/auth/{email}")
