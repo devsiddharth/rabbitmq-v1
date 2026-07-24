@@ -5,12 +5,12 @@ import com.stschools.microservices.common_contracts.dto.response.UserAuthRespons
 import com.stschools.microservices.common_contracts.dto.response.UserResponse;
 import com.stschools.microservices.user_service.entity.User;
 import com.stschools.microservices.user_service.service.UserService;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -33,22 +33,13 @@ public class UserController {
                 .body(response);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/email/{email}")
-    public ResponseEntity<User> getByEmail(
-            @PathVariable String email,
-            HttpServletRequest request) {
+    public UserResponse getUserByEmail(@PathVariable String email) {
 
-        System.out.println("Reached User Service");
-        System.out.println("Header Authorization = "
-                + request.getHeader("Authorization"));
+        User user = userService.getUserByEmail(email);
 
-        System.out.println("X-Authenticated-User = "
-                + request.getHeader("X-Authenticated-User"));
-
-        System.out.println("X-Authenticated-Role = "
-                + request.getHeader("X-Authenticated-Role"));
-
-        return ResponseEntity.ok(userService.getUserByEmail(email));
+        return modelMapper.map(user, UserResponse.class);
     }
 
     @GetMapping("/auth/{email}")
