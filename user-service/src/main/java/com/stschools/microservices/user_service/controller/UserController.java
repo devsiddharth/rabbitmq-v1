@@ -33,7 +33,7 @@ public class UserController {
                 .body(response);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('USER')")
     @GetMapping("/email/{email}")
     public UserResponse getUserByEmail(@PathVariable String email) {
 

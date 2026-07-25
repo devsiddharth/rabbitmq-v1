@@ -45,8 +45,13 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public LoginResponse login(LoginRequest request) {
 
+        System.out.println("Inside login service");
+        System.out.println(request.getEmail());
+
         UserAuthResponse user =
                 userFeignClient.getUserForAuthentication(request.getEmail());
+
+        System.out.println("User received: " + user.getEmail());
 
         if (!passwordEncoder.matches(
                 request.getPassword(),

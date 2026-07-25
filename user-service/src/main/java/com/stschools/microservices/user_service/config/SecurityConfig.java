@@ -1,5 +1,7 @@
 package com.stschools.microservices.user_service.config;
 
+import com.stschools.microservices.user_service.security.HeaderAuthenticationFilter;
+import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,12 +12,16 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableMethodSecurity
 @EnableWebSecurity
+@RequiredArgsConstructor
 
 public class SecurityConfig {
+
+    private final HeaderAuthenticationFilter headerAuthenticationFilter;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -36,8 +42,16 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .anyRequest().permitAll()
+                        .requestMatchers("/api/v1/users/auth/**")
+                        .permitAll()
+                        .anyRequest().authenticated()
                 )
+
+                .addFilterBefore(
+                        headerAuthenticationFilter,
+                        UsernamePasswordAuthenticationFilter.class
+                )
+
                 .httpBasic(Customizer.withDefaults());
 
         return http.build();
